@@ -34,36 +34,28 @@ class Categories(BaseModel):
     '''
     Model to list the possibles categories to the types of events.
     '''
-
     title = models.CharField(max_length=170, null=False)
     text = models.CharField(max_length=250, null=False)
-    id = models.AutoField(primary_key=True)
 
 
 class Post(BaseModel):
     '''
-
     '''
-    id = models.AutoField(primary_key=True)
     title = models.CharField(max_length=100, null=False)
     text = models.CharField(max_length=300, null=False)
-    posted_by = models.CharField(max_length=170) # UPDATE TO FOREIGN KEY WITH USER
+    posted_by = models.ForeignKey(User, on_delete=models.DO_NOTHING)
     like = models.IntegerField(default=0)
     denunciations = models.IntegerField(default=0)
-    #comments = models.ArrayField(Comment, default=[])
 
 class Post_Categorie(BaseModel):
     '''
     Model to connect the Posts with their categories
     '''
-    #post_id = models.ForeignKey(Post, related_name='id')
-    #categorie_id = models.ForeignKey(Categories, related_name='id')
-
-    #class Meta:
-        #id = (('post_id', 'categorie_id'))
+    post_id = models.ForeignKey(Post, on_delete=models.CASCADE)
+    categorie_id = models.ForeignKey(Categories, on_delete=models.DO_NOTHING)
+    id = ((post_id, categorie_id))
 
 class Event(Post):
-
     date = models.DateField(null=False)
     place = models.CharField(null=False, max_length=300)
     time_duration = models.TimeField()
@@ -71,7 +63,6 @@ class Event(Post):
 
 class Comment(BaseModel):
     text = models.CharField(max_length=200, null=False)
-    posted_by = models.CharField(max_length=50)     #UPDATE TO USER FOREIGN KEY
+    posted_by = models.ForeignKey(User,  on_delete=models.DO_NOTHING)     #UPDATE TO USER FOREIGN KEY
     like = models.IntegerField(default=0)
-    #post_id = models.ForeignKey(Post)
-
+    post_id = models.ForeignKey(Post, on_delete=models.DO_NOTHING)
