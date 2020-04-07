@@ -1,5 +1,7 @@
 from django.db import models
 
+from .validators import valid_cpf_format
+
 class BaseModel(models.Model):
     '''
      Generic class to the database.
@@ -21,7 +23,9 @@ class User(BaseModel):
     profile_pic = models.CharField(max_length=700)
 
 class CommonUser(User):
-    cpf = models.CharField(max_length=14)
+    #REF: https://docs.djangoproject.com/en/3.0/ref/validators/
+    #File: validators
+    cpf = models.CharField(max_length=11, validators=[valid_cpf_format])   # Não contabilizar pontos e hífen
 
 class Student(User):
     registration = models.CharField(max_length=14)
