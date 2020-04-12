@@ -4,6 +4,7 @@ class BaseModel(models.Model):
     '''
      Generic class to the database.
     '''
+
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
@@ -11,7 +12,11 @@ class BaseModel(models.Model):
         abstract = True
 
 class User(BaseModel):
-    id = models.IntegerField(primary_key=True)
+    '''
+     Model class for users
+    '''
+
+    id = models.AutoField(primary_key=True)
     username = models.CharField(max_length=50)
     password = models.CharField(max_length=8)
     first_name = models.CharField(max_length=50)
@@ -21,12 +26,24 @@ class User(BaseModel):
     profile_pic = models.CharField(max_length=700)
 
 class CommonUser(User):
+    '''
+     Model for common users inside us system
+    '''
+
     cpf = models.CharField(max_length=14)
 
 class Student(User):
+    '''
+     Model for students users
+    '''
+
     registration = models.CharField(max_length=14)
 
 class Teacher(User):
+    '''
+     Model for teachers users
+    '''
+
     registration = models.CharField(max_length=50)
     school_subject = models.CharField(max_length=50)
 
@@ -42,7 +59,7 @@ class Categories(BaseModel):
 
 class Post(BaseModel):
     '''
-
+    Model for save posts
     '''
     id = models.AutoField(primary_key=True)
     title = models.CharField(max_length=100, null=False)
