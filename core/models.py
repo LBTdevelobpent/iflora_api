@@ -54,8 +54,8 @@ class Categories(BaseModel):
     '''
     Model to list the possibles categories to the types of events.
     '''
-    title = models.CharField(max_length=170, null=False)
-    text = models.CharField(max_length=250, null=False)
+    name = models.CharField(max_length=170, null=False)
+    description = models.CharField(max_length=250, null=False)
 
 
 class Post(BaseModel):
